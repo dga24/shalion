@@ -4,7 +4,7 @@ A REST API for managing schools and students built with Kotlin, Spring Boot, and
 
 ## Tech Stack
 
-- **Kotlin** + Spring Boot 3.5.4
+- **Kotlin** + Spring Boot
 - **PostgreSQL** database
 - **Docker** for containerization
 - **Swagger UI** for API documentation
@@ -47,6 +47,9 @@ docker-compose logs -f app
 # Stop everything
 docker-compose down
 ```
+
+### Check the Postman Collection for testing
+Import ```postman.json``` into Postman
 
 
 
