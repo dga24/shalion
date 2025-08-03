@@ -30,16 +30,19 @@ class SchoolService(
         id: Long,
         updated: SchoolUpdateRequest,
     ) {
-        val existingSchool = schoolRepository.findById(id)
-            .orElseThrow { NoSuchElementException("School not found") }
-        
+        val existingSchool =
+            schoolRepository.findById(id)
+                .orElseThrow { NoSuchElementException("School not found") }
+
         if (updated.capacity < existingSchool.capacity) {
             val enrolledCount = studentRepository.countBySchoolId(id)
             if (enrolledCount > updated.capacity) {
-                throw IllegalStateException("Cannot reduce capacity to ${updated.capacity}. School currently has $enrolledCount enrolled students.")
+                throw IllegalStateException(
+                    "Cannot reduce capacity to ${updated.capacity}. School currently has $enrolledCount enrolled students.",
+                )
             }
         }
-        
+
         try {
             schoolRepository.save(School(id = id, name = updated.name, capacity = updated.capacity))
         } catch (ex: DataIntegrityViolationException) {
