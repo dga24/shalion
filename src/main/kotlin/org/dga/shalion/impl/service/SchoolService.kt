@@ -1,5 +1,6 @@
 package org.dga.shalion.impl.service
 
+import jakarta.transaction.Transactional
 import org.dga.shalion.entities.School
 import org.dga.shalion.entities.Student
 import org.dga.shalion.impl.rest.v1.requests.SchoolCreateRequest
@@ -24,11 +25,21 @@ class SchoolService(
         }
     }
 
+    @Transactional
     fun update(
         id: Long,
         updated: SchoolUpdateRequest,
     ) {
-        schoolRepository.save(School(id = id, name = updated.name, capacity = updated.capacity))
+        val existingSchool = schoolRepository.findById(id)
+            .orElseThrow { NoSuchElementException("School not found") }
+        
+        if (updated.capacity < existingSchool.capacity) {
+            val enrolledCount = studentRepository.countBySchoolId(id)
+            if (enrolledCount > updated.capacity) {
+                throw IllegalStateException("Cannot reduce capacity to ${updated.capacity}. School currently has $enrolledCount enrolled students.")
+            }
+        }
+        
         try {
             schoolRepository.save(School(id = id, name = updated.name, capacity = updated.capacity))
         } catch (ex: DataIntegrityViolationException) {
