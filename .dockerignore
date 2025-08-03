@@ -1,0 +1,8 @@
+.git
+.idea
+.gradle/kotlin
+.gradle/8.14.3/executionHistory
+.gradle/buildOutputCleanup
+build/
+my.env
+README.md

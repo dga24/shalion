@@ -1,0 +1,17 @@
+
+CREATE TABLE IF NOT EXISTS school (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    capacity INT NOT NULL CHECK (capacity BETWEEN 50 AND 2000)
+    );
+
+CREATE TABLE IF NOT EXISTS student (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    school_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_school
+    FOREIGN KEY (school_id)
+    REFERENCES school(id)
+    ON DELETE RESTRICT
+    );

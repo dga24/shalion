@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: shalion-school
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: shalion
+      POSTGRES_USER: shalion_user
+      POSTGRES_PASSWORD: shalion_pass
+    volumes:
+      - ./docker/init-db:/docker-entrypoint-initdb.d
+
+  app:
+    build: .
+    container_name: shalion-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shalion
+      SPRING_DATASOURCE_USERNAME: shalion_user
+      SPRING_DATASOURCE_PASSWORD: shalion_pass
+    depends_on:
+      - postgres

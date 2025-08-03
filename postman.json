@@ -1,0 +1,579 @@
+{
+  "info": {
+    "name": "Shalion API - School Management",
+    "description": "Complete API collection for testing School and Student endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "schoolId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "studentId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Schools",
+      "item": [
+        {
+          "name": "Create School",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Springfield Elementary\",\n  \"capacity\": 500\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create School - Duplicate Name (409 Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Springfield Elementary\",\n  \"capacity\": 300\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create School - Invalid Capacity (400 Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Invalid School\",\n  \"capacity\": 25\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get School by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school/{{schoolId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school", "{{schoolId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get School Details with Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school/{{schoolId}}/details?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school", "{{schoolId}}", "details"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Schools by Name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school?name=Spring&page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Spring"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update School",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school/{{schoolId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school", "{{schoolId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Springfield Elementary Updated\",\n  \"capacity\": 600\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete School",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school/{{schoolId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school", "{{schoolId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bart Simpson\",\n  \"schoolId\": {{schoolId}}\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Student - School at Capacity (Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Lisa Simpson\",\n  \"schoolId\": 999\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "{{studentId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "{{studentId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bartholomew J. Simpson\",\n  \"schoolId\": {{schoolId}}\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Student - Change School",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "{{studentId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bart Simpson\",\n  \"schoolId\": 2\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Students by Name in School",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/search?schoolId={{schoolId}}&name=Bart&page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "search"],
+              "query": [
+                {
+                  "key": "schoolId",
+                  "value": "{{schoolId}}"
+                },
+                {
+                  "key": "name",
+                  "value": "Bart"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "{{studentId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Cases",
+      "item": [
+        {
+          "name": "Get Non-existent School (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school/99999",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school", "99999"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Non-existent Student (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/99999",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "99999"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Student - Invalid School ID (404)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Invalid Student\",\n  \"schoolId\": 99999\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create School - Empty Name (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"capacity\": 100\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Workflow",
+      "item": [
+        {
+          "name": "1. Create School A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test School A\",\n  \"capacity\": 2\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create School B",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/school",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "school"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test School B\",\n  \"capacity\": 100\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Create Student 1 in School A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Student One\",\n  \"schoolId\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Create Student 2 in School A",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Student Two\",\n  \"schoolId\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Try Create Student 3 in School A (Should Fail - Capacity)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Student Three\",\n  \"schoolId\": 1\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. Transfer Student 1 to School B",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Student One\",\n  \"schoolId\": 2\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Now Create Student 3 in School A (Should Work)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "students"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Student Three\",\n  \"schoolId\": 1\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

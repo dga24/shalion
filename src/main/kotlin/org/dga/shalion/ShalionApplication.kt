@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ShalionApplication
 
 fun main(args: Array<String>) {
-	runApplication<ShalionApplication>(*args)
+    runApplication<ShalionApplication>(*args)
 }
